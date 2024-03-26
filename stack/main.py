@@ -1,44 +1,33 @@
+from typing import Any, Self
+
+
 class Stack:
-    def __init__(self, stack):
-        self.stack = stack
+    def __init__(self):
+        self._stack: list[Any] = []
 
-    def push(self, element):
-        try:
-            return self.stack.append(element)
-        except (AttributeError):
-            raise AttributeError('Добавить можем только в список :(')
+    def push(self, element: Any) -> Self:
+        self._stack.append(element)
+        return self
 
-    def pop(self):
+    def pop(self) -> Any:
         try:
-            return self.stack.pop()
-        except (IndexError, AttributeError):
+            return self._stack.pop()
+        except (IndexError):
             raise IndexError('В списке должно должен быть хотя бы один элемент')
 
-    def is_empty(self):
-        if isinstance(self.stack, list):
-            return self.stack == []
-        else:
-            raise TypeError('Наличие элементов можем проверить только у списка')
+    def is_empty(self) -> bool:
+        return not self._stack
 
-    def size(self):
-        if isinstance(self.stack, list):
-            return len(self.stack)
-        else:
-            raise TypeError('Размер стэка проверить можем только у списка')
+    def size(self) -> int:
+        return len(self._stack)
 
-    def items(self):
-        return self.stack
+    @property
+    def items(self) -> list[Any]:
+        some_list = self._stack.copy()
+        return some_list
 
-    def top(self):
+    def top(self) -> Any:
         try:
-            return self.stack[-1]
-        except (IndexError, TypeError):
+            return self._stack[-1]
+        except (IndexError):
             raise IndexError('В списке должно должен быть хотя бы один элемент')
-
-
-some_list = 5
-test_stack = Stack(some_list)
-
-
-if __name__ == '__main__':
-    test_stack.is_empty()
